@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | server2</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --transition: all 0.3s ease-in-out;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 5rem;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            position: relative;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: var(--gray);
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light);
+            color: var(--dark);
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-icons a:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .hero-shape {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 45%;
+            height: 85%;
+            background-color: var(--primary);
+            clip-path: polygon(40% 0, 100% 0, 100% 100%, 0 100%);
+            z-index: 0;
+            opacity: 0.05;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-img {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill {
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .skill:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Services Section */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--gray);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background-color: var(--primary);
+            opacity: 0.05;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .service-card:hover::before {
+            height: 100%;
+        }
+
+        .service-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-icon {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Portfolio Section */
+        .portfolio-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            background-color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .portfolio-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(37, 99, 235, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: var(--transition);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-item:hover .portfolio-img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-overlay p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .portfolio-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            color: var(--primary);
+            border-radius: 50%;
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+
+        .portfolio-link:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Testimonial Section */
+        .testimonials {
+            background-color: #f1f5f9;
+        }
+
+        .testimonial-slider {
+            position: relative;
+            overflow: hidden;
+            padding: 3rem 0;
+        }
+
+        .testimonial-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial-slide {
+            min-width: 100%;
+            padding: 0 1rem;
+        }
+
+        .testimonial-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            left: 2rem;
+            font-size: 5rem;
+            color: rgba(37, 99, 235, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .client-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            object-fit: cover;
+            border: 5px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+
+        .client-name {
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .client-position {
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #cbd5e1;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dot.active {
+            background-color: var(--primary);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .contact-details {
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            border-radius: 50%;
+            margin-right: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .contact-form {
+            background-color: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 5rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-col p {
+            color: #9ca3af;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 1rem;
+        }
+
+        .footer-link a {
+            color: #9ca3af;
+            transition: var(--transition);
+        }
+
+        .footer-link a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            color: #9ca3af;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 99;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+
+        /* Loader */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .loader.loaded {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-circle {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(37, 99, 235, 0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .about-img {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 400px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.show {
+                right: 0;
+            }
+            
+            .menu-btn {
+                display: block;
+                z-index: 101;
+            }
+            
+            .menu-btn.active i::before {
+                content: "\f00d";
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .contact-form {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 4rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .portfolio-filter {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .fade-in.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(37, 99, 235, 0.5);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            display: none;
+        }
+
+        .custom-cursor.active {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(37, 99, 235, 0.2);
+        }
+
+        /* Dark mode toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 6rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 99;
+            transition: var(--transition);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #111827;
+            color: #f9fafb;
+        }
+
+        body.dark-mode header {
+            background-color: rgba(17, 24, 39, 0.9);
+        }
+
+        body.dark-mode .service-card,
+        body.dark-mode .contact-form,
+        body.dark-mode .testimonial-card {
+            background-color: #1f2937;
+        }
+
+        body.dark-mode .form-control {
+            background-color: #374151;
+            border-color: #4b5563;
+            color: #f9fafb;
+        }
+
+        body.dark-mode .dark-mode-toggle {
+            background-color: #1f2937;
+            color: #f9fafb;
+        }
+
+        body.dark-mode .filter-btn {
+            background-color: #1f2937;
+            color: #f9fafb;
+        }
+
+        body.dark-mode .gray {
+            color: #9ca3af;
+        }
+
+        body.dark-mode .testimonials {
+            background-color: #111827;
+        }
+
+        body.dark-mode .loader {
+            background-color: #111827;
+        }
+
+        body.dark-mode .skill {
+            background-color: rgba(37, 99, 235, 0.2);
+        }
+
+        body.dark-mode .service-icon {
+            background-color: rgba(37, 99, 235, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="loader">
+        <div class="loader-circle"></div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">Portfolio</a>
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#services" class="nav-link">Services</a></li>
+                    <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                    <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="admin.html" class="nav-link"><i class="fas fa-tools"></i> Admin</a></li>
+</ul>
+                <button class="menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="fade-in">Hi, I'm <span>Anson,Karthik,Selina,Punnyalekshmi</span></h1>
+                <p class="fade-in">Hi, I'm a passionate Computer Engineering Diploma student and an aspiring full-stack developer.</p>
+                <div class="hero-btns fade-in">
+                    <a href="#portfolio" class="btn">View My Work</a>
+                    <a href="#contact" class="btn btn-outline">Contact Me</a>
+                </div>
+                <div class="social-icons fade-in">
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-dribbble"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-shape"></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-img fade-in">
+                    <img src="cvimg.jpg" alt="About Me">
+                </div>
+                <div class="about-text">
+                    <h2 class="fade-in">About Me</h2>
+                    <p class="fade-in">Hi, I'm Anson, a passionate Computer Engineering Diploma student and an aspiring full-stack developer with a creative mind and a curious heart. I enjoy building clean, functional websites and digital solutions that solve real-world problems.
+
+I started my journey in tech by exploring C programming, HTML, and Python, and I've been hooked ever since. Whether it's a college project or a freelance opportunity, I bring a balance of logic, design, and dedication to everything I do.</p>
+                    <p class="fade-in"> I'm always exploring new technologies like JavaScript, React, and Firebase, and recently I've been diving into AI tools and creative design to enhance my skills.
+
+When I'm not coding, you’ll find me editing gaming videos, clicking photos, or helping my friends with studies (yes, I enjoy being the tech support of my circle ).</p>
+                    <div class="skills fade-in">
+                        <span class="skill">HTML & CSS</span>
+                        <span class="skill">JavaScript</span>
+                        <span class="skill">React.js</span>
+                        <span class="skill">UI/UX Design</span>
+                        <span class="skill">Figma</span>
+                        <span class="skill">Responsive Design</span>
+                        <span class="skill">Node.js</span>
+                        <span class="skill">WordPress</span>
+                    </div>
+                    <a href="#" id="downloadCVBtn" class="btn fade-in" style="margin-top: 2rem;">Download CV</a>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="fade-in">My Services</h2>
+                <p class="fade-in">Here are the premium services I offer to help businesses and individuals establish a strong digital presence.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>UI/UX Design</h3>
+                    <p>Creating intuitive and engaging user experiences through thoughtful design, wireframing, and prototyping.</p>
+                    <a href="#" class="btn btn-outline">Learn More</a>
+                    </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Web Development</h3>
+                    <p>Building responsive, fast, and feature-rich websites and web applications using modern technologies.</p>
+                    <a href="#" class="btn btn-outline">Learn More</a>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile-First Design</h3>
+                    <p>Ensuring your digital presence looks and functions perfectly across all devices and screen sizes.</p>
+                    <a href="#" class="btn btn-outline">Learn More</a>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>SEO Optimization</h3>
+                    <p>Improving your website's visibility in search engines to drive more organic traffic to your business.</p>
+                    <a href="#" class="btn btn-outline">Learn More</a>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Website Maintenance</h3>
+                    <p>Keeping your website secure, up-to-date, and performing optimally with regular maintenance.</p>
+                    <a href="#" class="btn btn-outline">Learn More</a>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3>Brand Strategy</h3>
+                    <p>Developing comprehensive brand identities that connect with your audience and differentiate you from competitors.</p>
+                    <a href="#" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="fade-in">My Work</h2>
+                <p class="fade-in">Check out some of my recent projects that showcase my skills and expertise.</p>
+            </div>
+            <div class="portfolio-filter fade-in">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="web">Web Design</button>
+                <button class="filter-btn" data-filter="ui">UI/UX</button>
+                <button class="filter-btn" data-filter="branding">Branding</button>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item fade-in" data-category="web">
+                    <img src="w.png" alt="Project 1" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>E-commerce Website</h3>
+                        <p>Web Design & Development</p>
+                        <a href="#" class="portfolio-link"><i class="fas fa-link"></i></a>
+                    </div>
+                </div>
+                <div class="portfolio-item fade-in" data-category="ui">
+                    <img src="ui.jpg" alt="Project 2" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>Mobile Banking App</h3>
+                        <p>UI/UX Design</p>
+                        <a href="#" class="portfolio-link"><i class="fas fa-link"></i></a>
+                    </div>
+                </div>
+                <div class="portfolio-item fade-in" data-category="branding">
+                    <img src="branding.jpg" alt="Project 3" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>Coffee Shop Branding</h3>
+                        <p>Branding & Identity</p>
+                        <a href="#" class="portfolio-link"><i class="fas fa-link"></i></a>
+                    </div>
+                </div>
+                <div class="portfolio-item fade-in" data-category="web">
+                    <img src="webdesign2.png" alt="Project 4" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>Real Estate Platform</h3>
+                        <p>Web Development</p>
+                        <a href="#" class="portfolio-link"><i class="fas fa-link"></i></a>
+                    </div>
+                </div>
+                <div class="portfolio-item fade-in" data-category="ui">
+                    <img src="ui2.jpg" alt="Project 5" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>Fitness Tracking App</h3>
+                        <p>UI/UX Design</p>
+                        <a href="#" class="portfolio-link"><i class="fas fa-link"></i></a>
+                    </div>
+                </div>
+                <div class="portfolio-item fade-in" data-category="branding">
+                    <img src="branding2.jpg" alt="Project 6" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>Tech Startup Branding</h3>
+                        <p>Brand Identity</p>
+                        <a href="#" class="portfolio-link"><i class="fas fa-link"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="fade-in">Client Testimonials</h2>
+                <p class="fade-in">What my clients say about working with me and the results we've achieved together.</p>
+            </div>
+            <div class="testimonial-slider fade-in">
+                <div class="testimonial-track">
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <img src="Sarah Johnson.jpeg" alt="Client 1" class="client-img">
+                            <p class="testimonial-text">"Working with this designer was an absolute pleasure. They understood our vision perfectly and transformed it into a website that exceeded our expectations. Their attention to detail and commitment to quality is outstanding."</p>
+                            <h4 class="client-name">Sarah Johnson</h4>
+                            <p class="client-position">CEO, TechStart Inc.</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <img src="michle.jpg" alt="Client 2" class="client-img">
+                            <p class="testimonial-text">"The redesign of our e-commerce platform led to a 40% increase in conversions within the first month. Their strategic approach to UX design and technical expertise made all the difference to our business."</p>
+                            <h4 class="client-name">Michael Rodriguez</h4>
+                            <p class="client-position">Founder, ShopEasy</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <img src="emma.jpg" alt="Client 3" class="client-img">
+                            <p class="testimonial-text">"Not only did they deliver an exceptional website on time and within budget, but they also provided valuable insights that helped improve our overall digital strategy. I would highly recommend their services."</p>
+                            <h4 class="client-name">Emma Thompson</h4>
+                            <p class="client-position">Marketing Director, Bloom Co.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+        <!-- Blog Section -->
+<section id="blog" class="blog">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="fade-in">My Blog</h2>
+            <p class="fade-in">Insights, tutorials, and thoughts on design, development, and digital trends.</p>
+        </div>
+        
+        <div class="blog-filters fade-in">
+            <div class="blog-search">
+                <input type="text" id="blog-search-input" class="form-control" placeholder="Search blog posts...">
+                <button id="blog-search-btn" class="btn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="blog-categories">
+                <button class="filter-btn active" data-category="all">All</button>
+                <button class="filter-btn" data-category="design">Design</button>
+                <button class="filter-btn" data-category="development">Development</button>
+                <button class="filter-btn" data-category="business">Business</button>
+                <button class="filter-btn" data-category="tutorials">Tutorials</button>
+            </div>
+        </div>
+        
+        <div class="blog-grid">
+            <!-- Blog posts will be loaded dynamically here -->
+        </div>
+        
+        <div class="blog-load-more">
+            <button id="load-more-btn" class="btn">Load More</button>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Post Modal -->
+<div id="blog-modal" class="blog-modal">
+    <div class="blog-modal-content">
+        <span class="blog-modal-close">&times;</span>
+        <div id="blog-modal-body">
+            <!-- Blog post content will be loaded here -->
+        </div>
+    </div>
+</div>
+
+<!-- Add this to your existing CSS section -->
+<style>
+    /* Blog Section Styles */
+    .blog {
+        background-color: #f9fafb;
+    }
+    
+    body.dark-mode .blog {
+        background-color: #111827;
+    }
+    
+    .blog-filters {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3rem;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+    
+    .blog-search {
+        display: flex;
+        max-width: 400px;
+        width: 100%;
+    }
+    
+    .blog-search input {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        flex-grow: 1;
+    }
+    
+    .blog-search button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    
+    .blog-categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    
+    .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+    
+    .blog-card {
+        background-color: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: var(--transition);
+    }
+    
+    body.dark-mode .blog-card {
+        background-color: #1f2937;
+    }
+    
+    .blog-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .blog-img {
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    .blog-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+    }
+    
+    .blog-card:hover .blog-img img {
+        transform: scale(1.05);
+    }
+    
+    .blog-content {
+        padding: 1.5rem;
+    }
+    
+    .blog-meta {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+        font-size: 0.875rem;
+        color: var(--gray);
+    }
+    
+    .blog-category {
+        background-color: rgba(37, 99, 235, 0.1);
+        color: var(--primary);
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-weight: 500;
+    }
+    
+    body.dark-mode .blog-category {
+        background-color: rgba(37, 99, 235, 0.2);
+    }
+    
+    .blog-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+        line-height: 1.4;
+    }
+    
+    .blog-excerpt {
+        color: var(--gray);
+        margin-bottom: 1.25rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .blog-load-more {
+        text-align: center;
+    }
+    
+    /* Blog Modal */
+    .blog-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+    }
+    
+    .blog-modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 2rem;
+        width: 90%;
+        max-width: 900px;
+        border-radius: 20px;
+        position: relative;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    body.dark-mode .blog-modal-content {
+        background-color: #1f2937;
+    }
+    
+    .blog-modal-close {
+        position: absolute;
+        top: 1.5rem;
+        right: 2rem;
+        color: var(--gray);
+        font-size: 2rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    
+    .blog-modal-close:hover {
+        color: var(--primary);
+    }
+    
+    .blog-post-content {
+        margin-top: 2rem;
+    }
+    
+    .blog-post-header {
+        margin-bottom: 2rem;
+    }
+    
+    .blog-post-meta {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 1rem;
+        color: var(--gray);
+    }
+    
+    .blog-post-meta div {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .blog-post-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .blog-post-img {
+        width: 100%;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+    }
+    
+    /* For tablets */
+    @media (max-width: 768px) {
+        .blog-filters {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .blog-search {
+            max-width: 100%;
+        }
+        
+        .blog-grid {
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        }
+        
+        .blog-modal-content {
+            width: 95%;
+            margin: 10% auto;
+            padding: 1.5rem;
+        }
+        
+        .blog-post-title {
+            font-size: 2rem;
+        }
+    }
+    
+    /* For mobile */
+    @media (max-width: 480px) {
+        .blog-categories {
+            justify-content: center;
+        }
+        
+        .blog-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .blog-modal-content {
+            margin: 15% auto;
+            padding: 1rem;
+        }
+        
+        .blog-post-title {
+            font-size: 1.75rem;
+        }
+        
+        .blog-post-meta {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    }
+</style>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="fade-in">Get In Touch</h2>
+                <p class="fade-in">Have a project in mind or want to collaborate? Drop me a message!</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2 class="fade-in">Let's Discuss Your Project</h2>
+                    <p class="fade-in">I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.</p>
+                    <div class="contact-details fade-in">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4>Location</h4>
+                                <p>GPTC pala ,India</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>sajusolia@gmail.com<br>josephselina62@gmail.com<br>punnyalekshmim@gmail.com<br>karthikprasannan540@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>7510126549<br>9747190972<br>9961905710<br>6282305934</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="social-icons fade-in">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-dribbble"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form fade-in">
+                    <form id="contactForm" method="POST" action="send-email.php" onsubmit="return handleFormSubmit();">
+
+    <div class="form-group">
+        <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+    </div>
+    <div class="form-group">
+        <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" name="subject" placeholder="Subject" required>
+    </div>
+    <div class="form-group">
+        <textarea class="form-control" name="message" placeholder="Your Message" required></textarea>
+    </div>
+    <button type="submit" class="btn">Send Message</button>
+</form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>About Me</h3>
+                    <p>I'm a passionate designer and developer dedicated to creating exceptional digital experiences that help businesses and individuals establish a strong online presence.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#home">Home</a></li>
+                        <li class="footer-link"><a href="#about">About</a></li>
+                        <li class="footer-link"><a href="#services">Services</a></li>
+                        <li class="footer-link"><a href="#portfolio">Portfolio</a></li>
+                        <li class="footer-link"><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">UI/UX Design</a></li>
+                        <li class="footer-link"><a href="#">Web Development</a></li>
+                        <li class="footer-link"><a href="#">Mobile Design</a></li>
+                        <li class="footer-link"><a href="#">Brand Strategy</a></li>
+                        <li class="footer-link"><a href="#">SEO Optimization</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to receive updates on my latest projects and insights on design and development.</p>
+                    <form class="footer-form">
+                        <input type="email" class="form-control" placeholder="Your Email" required>
+                        <button type="submit" class="btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 protofolio. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Preloader
+        window.addEventListener('load', function() {
+            document.querySelector('.loader').classList.add('loaded');
+        });
+
+        // Mobile Menu Toggle
+        const menuBtn = document.querySelector('.menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('show');
+            menuBtn.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('show');
+                menuBtn.classList.remove('active');
+            });
+        });
+
+        // Scrolled Header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Back to Top Button
+        const backToTopBtn = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Fade In Animations
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    fadeInObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        fadeElements.forEach(element => {
+            fadeInObserver.observe(element);
+        });
+
+        // Portfolio Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                const filterValue = btn.getAttribute('data-filter');
+                
+                portfolioItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Testimonial Slider
+        const testimonialTrack = document.querySelector('.testimonial-track');
+        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
+
+        function goToSlide(index) {
+            testimonialTrack.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                goToSlide(index);
+            });
+        });
+
+        // Auto slide every 5 seconds
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % testimonialSlides.length;
+            goToSlide(currentSlide);
+        }, 5000);
+
+        // Custom Cursor
+        const cursor = document.querySelector('.custom-cursor');
+        
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.display = 'block';
+                cursor.style.left = `${e.clientX}px`;
+                cursor.style.top = `${e.clientY}px`;
+            });
+
+            document.addEventListener('mousedown', () => {
+                cursor.classList.add('active');
+            });
+
+            document.addEventListener('mouseup', () => {
+                cursor.classList.remove('active');
+            });
+
+            document.addEventListener('mouseleave', () => {
+                cursor.style.display = 'none';
+            });
+        }
+
+        // Dark Mode Toggle
+        const darkModeToggle = document.querySelector('.dark-mode-toggle');
+        const body = document.body;
+        const icon = darkModeToggle.querySelector('i');
+
+        // Check for saved preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        // Form Submission
+      
+const form = document.getElementById('contactForm');
+const submitBtn = form.querySelector('button');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault(); // stop default submit
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'Sending...';
+
+    const formData = new FormData(form);
+
+    fetch('send-email.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.text())
+    .then(response => {
+        alert(response);
+        form.reset();
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Send Message';
+    })
+    .catch(error => {
+        alert('❌ Error sending message. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Send Message';
+    });
+});
+
+
+
+
+    </script>
+    <script src="cvdownload.js"></script>
+    <script src="service-model.js"></script>
+    <script src="contact.js"></script>
+    <script src="blog.js"></script>
+
+
+<script>
+console.log("✅ Blog loading script running");
+
+document.addEventListener('DOMContentLoaded', () => {
+    const blogGrid = document.querySelector('.blog-grid');
+    const loadMoreBtn = document.getElementById('load-more-btn');
+
+    if (!blogGrid || !loadMoreBtn) {
+        console.warn("🚨 blogGrid or loadMoreBtn not found");
+        return;
+    }
+
+    let blogs = JSON.parse(localStorage.getItem('blogPosts')) || [];
+    blogs = blogs.filter(b => b.status === 'published');
+
+    if (blogs.length === 0) {
+        blogGrid.innerHTML = "<p style='color: var(--gray);'>No blog posts available.</p>";
+        loadMoreBtn.style.display = 'none';
+        return;
+    }
+
+    let shown = 0;
+    const perPage = 3;
+
+    function loadBlogs() {
+        const slice = blogs.slice(shown, shown + perPage);
+        slice.forEach(blog => {
+            const card = document.createElement('div');
+            card.className = 'blog-card';
+            card.innerHTML = `
+                <div class="blog-img">
+                    <img src="${blog.image}" alt="${blog.title}">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">${blog.category}</span>
+                        <span>${new Date(blog.date).toLocaleDateString()}</span>
+                    </div>
+                    <h3 class="blog-title">${blog.title}</h3>
+                    <p class="blog-excerpt">${blog.excerpt}</p>
+                    <button class="btn btn-outline" onclick="showBlogModal('${blog.id}')">Read More</button>
+                </div>`;
+            blogGrid.appendChild(card);
+        });
+        shown += perPage;
+        if (shown >= blogs.length) loadMoreBtn.style.display = 'none';
+    }
+
+    loadMoreBtn.addEventListener('click', loadBlogs);
+    loadBlogs();
+
+    window.showBlogModal = function(id) {
+        const blog = blogs.find(b => b.id === id);
+        const modal = document.getElementById('blog-modal');
+        const body = document.getElementById('blog-modal-body');
+        body.innerHTML = `
+            <h2>${blog.title}</h2>
+            <p><strong>Category:</strong> ${blog.category}</p>
+            <img src="${blog.image}" style="max-width: 100%; margin: 1rem 0;" />
+            <p>${blog.content}</p>
+        `;
+        modal.style.display = 'block';
+    };
+
+    document.querySelector('.blog-modal-close').onclick = () => {
+        document.getElementById('blog-modal').style.display = 'none';
+    };
+});
+</script>
+<script>
+function handleFormSubmit() {
+    const btn = document.querySelector('button[type="submit"]');
+    btn.innerText = "Sending...";
+    btn.disabled = true;
+    return true; // allows the form to submit via PHP
+            // Form Submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Here you would typically add ajax code to send the form data
+            alert('Thanks for your message! I will get back to you soon.');
+            contactForm.reset();
+        });
+}
+</script>
+
+ <script src="cvdownload.js"></script>
+    <script src="service-model.js"></script>
+    <script src="contact.js"></script>
+    <script src="blog.js"></script>
+
+</body>
+</html>

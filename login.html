@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | server2</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease;
+    }
+    
+    .container:hover {
+      transform: translateY(-5px);
+    }
+    
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 600;
+      position: relative;
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 4px;
+      width: 50px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      border-radius: 2px;
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+      color: #333;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+    }
+    
+    .form-control:focus + .focus-border {
+      transform: scaleX(1);
+      transition: transform 0.3s ease;
+    }
+    
+    .form-control::placeholder {
+      color: #aaa;
+    }
+    
+    .focus-border {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .btn {
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      width: 100%;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    
+    .btn:hover {
+      background: linear-gradient(90deg, #764ba2, #667eea);
+      transform: translateY(-2px);
+      box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+      font-size: 14px;
+    }
+    
+    .links a {
+      color: #667eea;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .links a:hover {
+      color: #764ba2;
+      text-decoration: underline;
+    }
+    
+    .social-login {
+      margin-top: 30px;
+      text-align: center;
+    }
+    
+    .social-login p {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 15px;
+      position: relative;
+    }
+    
+    .social-login p::before,
+    .social-login p::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 30%;
+      height: 1px;
+      background-color: #ddd;
+    }
+    
+    .social-login p::before {
+      left: 0;
+    }
+    
+    .social-login p::after {
+      right: 0;
+    }
+    
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #f1f1f1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .social-icon:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .container {
+      animation: fadeIn 0.8s ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form action="login.php" method="POST">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
+        <span class="focus-border"></span>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+        <span class="focus-border"></span>
+      </div>
+      
+      <button type="submit" class="btn">Login</button>
+      
+      <div class="links">
+        <a href="#">Forgot Password?</a>
+        <a href="index.html">Create Account</a>
+      </div>
+      
+      <div class="social-login">
+        <p>Or login with</p>
+        <div class="social-icons">
+          <div class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.675 0H1.325C0.593 0 0 0.593 0 1.325V22.676C0 23.407 0.593 24 1.325 24H12.82V14.706H9.692V11.084H12.82V8.413C12.82 5.313 14.713 3.625 17.479 3.625C18.804 3.625 19.942 3.724 20.274 3.768V7.008L18.356 7.009C16.852 7.009 16.561 7.724 16.561 8.772V11.085H20.148L19.681 14.707H16.561V24H22.677C23.407 24 24 23.407 24 22.675V1.325C24 0.593 23.407 0 22.675 0Z" fill="#3B5998"/>
+            </svg>
+          </div>
+          <div class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 0C5.373 0 0 5.373 0 12C0 18.627 5.373 24 12 24C18.627 24 24 18.627 24 12C24 5.373 18.627 0 12 0ZM19.029 8.917C19.029 9.257 19.029 9.597 19.029 9.937C19.029 14.489 15.467 19.773 9.261 19.773C7.517 19.773 5.773 19.221 4.261 18.261C4.543 18.261 4.825 18.261 5.109 18.261C6.577 18.261 8.045 17.709 9.23 16.749C7.762 16.749 6.435 15.648 5.995 14.263C6.276 14.308 6.557 14.308 6.839 14.263C5.317 13.937 4.12 12.607 4.12 11.041C4.544 11.266 4.967 11.379 5.431 11.381C4.125 10.508 3.531 8.807 4.215 7.387C5.881 9.427 8.221 10.703 10.734 10.817C10.426 9.445 10.941 8.016 12.014 7.143C13.792 5.65 16.512 6.069 17.694 8.015C18.395 7.877 19.094 7.649 19.707 7.309C19.49 7.974 19.029 8.579 18.414 8.917C19.006 8.857 19.566 8.689 20.126 8.466C19.709 9.071 19.174 9.561 18.555 9.991C19.029 16.807 10.97 21.977 5.109 18.487C7.035 19.857 9.401 20.249 11.676 19.548C16.235 18.147 19.031 13.634 19.029 8.917Z" fill="#1DA1F2"/>
+            </svg>
+          </div>
+          <div class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 0C5.373 0 0 5.373 0 12C0 18.627 5.373 24 12 24C18.627 24 24 18.627 24 12C24 5.373 18.627 0 12 0ZM12 3C16.418 3 20 6.582 20 11C20 15.418 16.418 19 12 19C7.582 19 4 15.418 4 11C4 6.582 7.582 3 12 3ZM12 5.75C11.31 5.75 10.75 6.31 10.75 7C10.75 7.69 11.31 8.25 12 8.25C12.69 8.25 13.25 7.69 13.25 7C13.25 6.31 12.69 5.75 12 5.75ZM11 10V17H13V10H11Z" fill="#DB4437"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const inputs = document.querySelectorAll('.form-control');
+      const loginForm = document.querySelector('form');
+      let errorElement = null;
+      
+      // Check if there's an error in URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const errorMsg = urlParams.get('error');
+      
+      if (errorMsg) {
+        showError(errorMsg);
+      }
+      
+      // Add focus animation for input fields
+      inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+          this.parentElement.classList.add('focused');
+        });
+        
+        input.addEventListener('blur', function() {
+          if (this.value === '') {
+            this.parentElement.classList.remove('focused');
+          }
+        });
+      });
+      
+      // Handle form submission via AJAX
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Remove any existing error message
+        if (errorElement) {
+          errorElement.remove();
+          errorElement = null;
+        }
+        
+        // Show loading state
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Logging in...';
+        submitBtn.disabled = true;
+        
+        // Collect form data
+        const formData = new FormData(this);
+        
+        // Send AJAX request
+        fetch('login.php', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+  // Show success message
+  showSuccess('Login successful! Redirecting...');
+  
+  // Redirect after a short delay
+  setTimeout(() => {
+    window.location.href = 'home.html';
+  }, 1500);
+}
+ else {
+            // Show error message
+            showError(data.message || 'Login failed. Please try again.');
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
+          }
+        })
+        .catch(error => {
+          showError('An error occurred. Please try again.');
+          submitBtn.innerHTML = originalBtnText;
+          submitBtn.disabled = false;
+        });
+      });
+      
+      // Function to show error message
+      function showError(message) {
+        errorElement = document.createElement('div');
+        errorElement.className = 'error-message';
+        errorElement.textContent = message;
+        errorElement.style.color = '#ff4757';
+        errorElement.style.marginTop = '15px';
+        errorElement.style.textAlign = 'center';
+        errorElement.style.padding = '10px';
+        errorElement.style.borderRadius = '5px';
+        errorElement.style.backgroundColor = 'rgba(255, 71, 87, 0.1)';
+        errorElement.style.animation = 'fadeIn 0.3s ease forwards';
+        
+        const links = document.querySelector('.links');
+        loginForm.insertBefore(errorElement, links);
+      }
+      
+      // Function to show success message
+      function showSuccess(message) {
+        const successElement = document.createElement('div');
+        successElement.className = 'success-message';
+        successElement.textContent = message;
+        successElement.style.color = '#2ed573';
+        successElement.style.marginTop = '15px';
+        successElement.style.textAlign = 'center';
+        successElement.style.padding = '10px';
+        successElement.style.borderRadius = '5px';
+        successElement.style.backgroundColor = 'rgba(46, 213, 115, 0.1)';
+        successElement.style.animation = 'fadeIn 0.3s ease forwards';
+        
+        const links = document.querySelector('.links');
+        loginForm.insertBefore(successElement, links);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | server2</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 450px;
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease;
+    }
+    
+    .container:hover {
+      transform: translateY(-5px);
+    }
+    
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 600;
+      position: relative;
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 4px;
+      width: 50px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      border-radius: 2px;
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+      color: #333;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+    }
+    
+    .form-control:focus + .focus-border {
+      transform: scaleX(1);
+      transition: transform 0.3s ease;
+    }
+    
+    .form-control::placeholder {
+      color: #aaa;
+    }
+    
+    .focus-border {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .btn {
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      width: 100%;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    
+    .btn:hover {
+      background: linear-gradient(90deg, #764ba2, #667eea);
+      transform: translateY(-2px);
+      box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .links {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 14px;
+    }
+    
+    .links a {
+      color: #667eea;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .links a:hover {
+      color: #764ba2;
+      text-decoration: underline;
+    }
+    
+    .password-toggle {
+      position: absolute;
+      right: 15px;
+      top: 38px;
+      cursor: pointer;
+      color: #777;
+    }
+    
+    .password-strength {
+      height: 5px;
+      margin-top: 8px;
+      border-radius: 5px;
+      background: #ddd;
+      transition: all 0.3s ease;
+    }
+    
+    .password-feedback {
+      font-size: 12px;
+      margin-top: 5px;
+      color: #777;
+    }
+    
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .container {
+      animation: fadeIn 0.8s ease forwards;
+    }
+    
+    /* Checkmark animation */
+    .checkmark {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: block;
+      stroke-width: 2;
+      stroke: #fff;
+      stroke-miterlimit: 10;
+      box-shadow: inset 0px 0px 0px #7ac142;
+      animation: fill 0.4s ease-in-out 0.4s forwards, scale 0.3s ease-in-out 0.9s both;
+      position: relative;
+      margin: 0 auto;
+      margin-top: 20px;
+      display: none;
+    }
+    
+    .checkmark__circle {
+      stroke-dasharray: 166;
+      stroke-dashoffset: 166;
+      stroke-width: 2;
+      stroke-miterlimit: 10;
+      stroke: #7ac142;
+      fill: none;
+      animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
+    
+    .checkmark__check {
+      transform-origin: 50% 50%;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+    }
+    
+    @keyframes stroke {
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+    @keyframes scale {
+      0%, 100% {
+        transform: none;
+      }
+      50% {
+        transform: scale3d(1.1, 1.1, 1);
+      }
+    }
+    @keyframes fill {
+      100% {
+        box-shadow: inset 0px 0px 0px 30px #7ac142;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Create Account</h2>
+    <form action="register.php" method="POST" id="registerForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Choose a username" required>
+        <span class="focus-border"></span>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+        <span class="focus-border"></span>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Create a password" required>
+        <span class="focus-border"></span>
+        <div class="password-toggle" id="passwordToggle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </div>
+        <div class="password-strength" id="passwordStrength"></div>
+        <div class="password-feedback" id="passwordFeedback"></div>
+      </div>
+      
+      <div class="form-group">
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirm your password" required>
+        <span class="focus-border"></span>
+      </div>
+      
+      <button type="submit" class="btn" id="registerBtn">Register</button>
+      
+      <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" id="successMark">
+        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+      </svg>
+      
+      <div class="links">
+        <p>Already have an account? <a href="login.html">Login here</a></p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const inputs = document.querySelectorAll('.form-control');
+      const passwordInput = document.getElementById('password');
+      const confirmPasswordInput = document.getElementById('confirm_password');
+      const passwordToggle = document.getElementById('passwordToggle');
+      const passwordStrength = document.getElementById('passwordStrength');
+      const passwordFeedback = document.getElementById('passwordFeedback');
+      const registerForm = document.getElementById('registerForm');
+      const registerBtn = document.getElementById('registerBtn');
+      const successMark = document.getElementById('successMark');
+      let errorElement = null;
+      
+      // Focus effect for inputs
+      inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+          this.parentElement.classList.add('focused');
+        });
+        
+        input.addEventListener('blur', function() {
+          if (this.value === '') {
+            this.parentElement.classList.remove('focused');
+          }
+        });
+      });
+      
+      // Password visibility toggle
+      passwordToggle.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        
+        // Change the eye icon
+        this.innerHTML = type === 'password' ? 
+          '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>' : 
+          '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+      });
+      
+      // Password strength meter
+      passwordInput.addEventListener('input', function() {
+        const password = this.value;
+        let strength = 0;
+        let feedback = '';
+        
+        if (password.length > 6) strength += 20;
+        if (password.match(/[a-z]+/)) strength += 20;
+        if (password.match(/[A-Z]+/)) strength += 20;
+        if (password.match(/[0-9]+/)) strength += 20;
+        if (password.match(/[^a-zA-Z0-9]+/)) strength += 20;
+        
+        passwordStrength.style.width = strength + '%';
+        
+        if (strength < 40) {
+          passwordStrength.style.background = '#ff4757';
+          feedback = 'Weak password';
+        } else if (strength < 80) {
+          passwordStrength.style.background = '#ffa502';
+          feedback = 'Medium password';
+        } else {
+          passwordStrength.style.background = '#2ed573';
+          feedback = 'Strong password';
+        }
+        
+        passwordFeedback.textContent = feedback;
+      });
+      
+      // Form submission with AJAX
+      registerForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Remove any existing error message
+        if (errorElement) {
+          errorElement.remove();
+          errorElement = null;
+        }
+        
+        // Validate form
+        if (passwordInput.value !== confirmPasswordInput.value) {
+          showError('Passwords do not match');
+          return;
+        }
+        
+        // Show loading state
+        registerBtn.textContent = 'Registering...';
+        registerBtn.disabled = true;
+        
+        // Collect form data
+        const formData = new FormData(this);
+        
+        // Send AJAX request
+        fetch('register.php', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            // Show success animation
+            registerForm.style.opacity = '0.5';
+            successMark.style.display = 'block';
+            
+            // Redirect after success animation
+            setTimeout(function() {
+              window.location.href = data.redirect || 'login.html';
+            }, 2000);
+          } else {
+            // Show error message
+            showError(data.message || 'Registration failed. Please try again.');
+            registerBtn.textContent = 'Register';
+            registerBtn.disabled = false;
+          }
+        })
+        .catch(error => {
+          showError('An error occurred. Please try again.');
+          registerBtn.textContent = 'Register';
+          registerBtn.disabled = false;
+        });
+      });
+      
+      // Function to show error message
+      function showError(message) {
+        errorElement = document.createElement('div');
+        errorElement.className = 'error-message';
+        errorElement.textContent = message;
+        errorElement.style.color = '#ff4757';
+        errorElement.style.marginTop = '15px';
+        errorElement.style.marginBottom = '15px';
+        errorElement.style.textAlign = 'center';
+        errorElement.style.padding = '10px';
+        errorElement.style.borderRadius = '5px';
+        errorElement.style.backgroundColor = 'rgba(255, 71, 87, 0.1)';
+        errorElement.style.animation = 'fadeIn 0.3s ease forwards';
+        
+        registerForm.insertBefore(errorElement, registerBtn);
+      }
+    });
+  </script>
+</body>
+</html>

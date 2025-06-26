@@ -1,0 +1,503 @@
+id: 'blog_3',
+                        title: 'Building Scalable React Applications',
+                        category: 'development',
+                        excerpt: 'Best practices and patterns for building large-scale React applications that are maintainable and performant.',
+                        content: 'As React applications grow in complexity, it becomes crucial to implement proper architecture and patterns. This guide covers essential strategies for building scalable React apps...',
+                        tags: ['react', 'javascript', 'architecture'],
+                        status: 'draft',
+                        date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+                        image: 'https://picsum.photos/400/250?random=3',
+                        author: 'Admin',
+                        views: 0,
+                        slug: 'building-scalable-react-applications'
+                    },
+                    {
+                        id: 'blog_4',
+                        title: 'Digital Marketing Strategies for 2024',
+                        category: 'business',
+                        excerpt: 'Effective digital marketing strategies that will help your business grow in 2024.',
+                        content: 'The digital marketing landscape is constantly changing. Here are the most effective strategies you need to implement in 2024 to stay competitive...',
+                        tags: ['marketing', 'business', '2024'],
+                        status: 'published',
+                        date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+                        image: 'https://picsum.photos/400/250?random=4',
+                        author: 'Admin',
+                        views: 156,
+                        slug: 'digital-marketing-strategies-2024'
+                    },
+                    {
+                        id: 'blog_5',
+                        title: 'Complete Guide to CSS Grid',
+                        category: 'tutorials',
+                        excerpt: 'Master CSS Grid with this comprehensive tutorial covering all the essential concepts and practical examples.',
+                        content: 'CSS Grid revolutionized how we create layouts on the web. This comprehensive guide will take you from beginner to advanced level...',
+                        tags: ['css', 'grid', 'tutorial'],
+                        status: 'published',
+                        date: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+                        image: 'https://picsum.photos/400/250?random=5',
+                        author: 'Admin',
+                        views: 298,
+                        slug: 'complete-guide-css-grid'
+                    }
+                ];
+
+                sampleBlogs.forEach(blog => {
+                    this.tables.blogs.set(blog.id, {
+                        ...blog,
+                        createdAt: blog.date,
+                        updatedAt: blog.date
+                    });
+                });
+            }
+
+            // Get statistics
+            getStats() {
+                const blogs = Array.from(this.tables.blogs.values());
+                const currentMonth = new Date().getMonth();
+                const currentYear = new Date().getFullYear();
+
+                return {
+                    total: blogs.length,
+                    published: blogs.filter(b => b.status === 'published').length,
+                    draft: blogs.filter(b => b.status === 'draft').length,
+                    thisMonth: blogs.filter(b => {
+                        const blogDate = new Date(b.date);
+                        return blogDate.getMonth() === currentMonth && blogDate.getFullYear() === currentYear;
+                    }).length
+                };
+            }
+        }
+
+        // Initialize Database
+        const db = new MockDatabase();
+
+        // Blog Management Class
+        class BlogManager {
+            constructor() {
+                this.currentEditId = null;
+                this.init();
+            }
+
+            async init() {
+                // Wait a bit for database to initialize
+                setTimeout(async () => {
+                    await this.loadStats();
+                    await this.loadBlogs();
+                }, 100);
+                this.initEventListeners();
+            }
+
+            async loadStats() {
+                try {
+                    const stats = db.getStats();
+                    document.getElementById('totalBlogs').textContent = stats.total;
+                    document.getElementById('publishedBlogs').textContent = stats.published;
+                    document.getElementById('draftBlogs').textContent = stats.draft;
+                    document.getElementById('thisMonthBlogs').textContent = stats.thisMonth;
+                } catch (error) {
+                    this.showToast('Error loading statistics', 'error');
+                }
+            }
+
+            async loadBlogs(searchTerm = '', categoryFilter = '', statusFilter = '') {
+                try {
+                    let conditions = {};
+                    
+                    if (searchTerm) {
+                        conditions.title = { operator: 'LIKE', value: searchTerm };
+                    }
+                    if (categoryFilter) {
+                        conditions.category = categoryFilter;
+                    }
+                    if (statusFilter) {
+                        conditions.status = statusFilter;
+                    }
+
+                    const result = await db.query('SELECT', 'blogs', null, Object.keys(conditions).length ? conditions : null);
+                    this.renderBlogTable(result.data);
+                } catch (error) {
+                    this.showToast('Error loading blogs', 'error');
+                }
+            }
+
+            renderBlogTable(blogs) {
+                const tbody = document.getElementById('blogTableBody');
+                
+                if (blogs.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 2rem; color: var(--gray);">
+                                <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+                                No blogs found
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tbody.innerHTML = blogs.map(blog => `
+                    <tr>
+                        <td>
+                            <div style="font-weight: 600;">${blog.title}</div>
+                            <div style="font-size: 0.875rem; color: var(--gray);">${blog.excerpt.substring(0, 60)}...</div>
+                        </td>
+                        <td>
+                            <span style="text-transform: capitalize;">${blog.category}</span>
+                        </td>
+                        <td>
+                            <span class="blog-status status-${blog.status}">${blog.status}</span>
+                        </td>
+                        <td>
+                            <div>${new Date(blog.date).toLocaleDateString()}</div>
+                            <div style="font-size: 0.875rem; color: var(--gray);">${new Date(blog.date).toLocaleTimeString()}</div>
+                        </td>
+                        <td>
+                            <div class="blog-actions">
+                                <button class="btn btn-sm btn-secondary" onclick="blogManager.editBlog('${blog.id}')" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="blogManager.deleteBlog('${blog.id}')" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                ${blog.status === 'published' ? 
+                                    `<button class="btn btn-sm" onclick="window.open('#', '_blank')" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>` : ''
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            initEventListeners() {
+                // Add Blog Button
+                document.getElementById('addBlogBtn').addEventListener('click', () => {
+                    this.showBlogForm();
+                });
+
+                // Cancel Form Button
+                document.getElementById('cancelFormBtn').addEventListener('click', () => {
+                    this.hideBlogForm();
+                });
+
+                // Blog Form Submit
+                document.getElementById('blogForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveBlog();
+                });
+
+                // Search and Filter
+                document.getElementById('searchBlogs').addEventListener('input', (e) => {
+                    this.handleSearch();
+                });
+
+                document.getElementById('filterCategory').addEventListener('change', () => {
+                    this.handleSearch();
+                });
+
+                document.getElementById('filterStatus').addEventListener('change', () => {
+                    this.handleSearch();
+                });
+
+                // Image Upload
+                document.getElementById('blogImage').addEventListener('change', (e) => {
+                    this.handleImageUpload(e);
+                });
+
+                // Modal Events
+                document.getElementById('cancelDelete').addEventListener('click', () => {
+                    this.hideModal();
+                });
+
+                document.getElementById('confirmDelete').addEventListener('click', () => {
+                    this.confirmDelete();
+                });
+
+                // Preview Button
+                document.getElementById('previewBtn').addEventListener('click', () => {
+                    this.previewBlog();
+                });
+            }
+
+            showBlogForm(editMode = false) {
+                const container = document.getElementById('blogFormContainer');
+                const formTitle = document.getElementById('formTitle');
+                const saveButton = document.getElementById('saveButtonText');
+
+                if (editMode) {
+                    formTitle.textContent = 'Edit Blog Post';
+                    saveButton.textContent = 'Update Blog Post';
+                } else {
+                    formTitle.textContent = 'Add New Blog Post';
+                    saveButton.textContent = 'Save Blog Post';
+                    this.resetForm();
+                }
+
+                container.classList.add('active');
+                container.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            hideBlogForm() {
+                document.getElementById('blogFormContainer').classList.remove('active');
+                this.resetForm();
+                this.currentEditId = null;
+            }
+
+            resetForm() {
+                document.getElementById('blogForm').reset();
+                document.getElementById('editBlogId').value = '';
+                document.getElementById('imagePreview').style.display = 'none';
+            }
+
+            async saveBlog() {
+                try {
+                    const formData = this.getFormData();
+                    
+                    if (this.currentEditId) {
+                        // Update existing blog
+                        await db.query('UPDATE', 'blogs', formData, { id: this.currentEditId });
+                        this.showToast('Blog updated successfully!', 'success');
+                    } else {
+                        // Create new blog
+                        await db.query('INSERT', 'blogs', {
+                            ...formData,
+                            date: new Date().toISOString(),
+                            author: 'Admin',
+                            views: 0,
+                            slug: this.generateSlug(formData.title)
+                        });
+                        this.showToast('Blog created successfully!', 'success');
+                    }
+
+                    this.hideBlogForm();
+                    await this.loadBlogs();
+                    await this.loadStats();
+                } catch (error) {
+                    this.showToast('Error saving blog', 'error');
+                }
+            }
+
+            getFormData() {
+                return {
+                    title: document.getElementById('blogTitle').value,
+                    category: document.getElementById('blogCategory').value,
+                    excerpt: document.getElementById('blogExcerpt').value,
+                    content: document.getElementById('blogContent').value,
+                    tags: document.getElementById('blogTags').value.split(',').map(tag => tag.trim()).filter(tag => tag),
+                    status: document.getElementById('blogStatus').value,
+                    image: document.getElementById('imagePreview').src || 'https://picsum.photos/400/250?random=' + Math.floor(Math.random() * 100)
+                };
+            }
+
+            async editBlog(id) {
+                try {
+                    const result = await db.query('SELECT', 'blogs', null, { id });
+                    if (result.data.length > 0) {
+                        const blog = result.data[0];
+                        this.populateForm(blog);
+                        this.currentEditId = id;
+                        this.showBlogForm(true);
+                    }
+                } catch (error) {
+                    this.showToast('Error loading blog for editing', 'error');
+                }
+            }
+
+            populateForm(blog) {
+                document.getElementById('blogTitle').value = blog.title;
+                document.getElementById('blogCategory').value = blog.category;
+                document.getElementById('blogExcerpt').value = blog.excerpt;
+                document.getElementById('blogContent').value = blog.content;
+                document.getElementById('blogTags').value = blog.tags.join(', ');
+                document.getElementById('blogStatus').value = blog.status;
+                
+                if (blog.image) {
+                    const preview = document.getElementById('imagePreview');
+                    preview.src = blog.image;
+                    preview.style.display = 'block';
+                }
+            }
+
+            deleteBlog(id) {
+                this.currentDeleteId = id;
+                this.showModal();
+            }
+
+            async confirmDelete() {
+                try {
+                    await db.query('DELETE', 'blogs', null, { id: this.currentDeleteId });
+                    this.showToast('Blog deleted successfully!', 'success');
+                    this.hideModal();
+                    await this.loadBlogs();
+                    await this.loadStats();
+                } catch (error) {
+                    this.showToast('Error deleting blog', 'error');
+                }
+            }
+
+            handleSearch() {
+                const searchTerm = document.getElementById('searchBlogs').value;
+                const categoryFilter = document.getElementById('filterCategory').value;
+                const statusFilter = document.getElementById('filterStatus').value;
+                
+                this.loadBlogs(searchTerm, categoryFilter, statusFilter);
+            }
+
+            handleImageUpload(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const preview = document.getElementById('imagePreview');
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            previewBlog() {
+                const formData = this.getFormData();
+                const previewWindow = window.open('', '_blank');
+                previewWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>${formData.title}</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+                            .preview-header { background: #f0f0f0; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+                            .preview-image { width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin: 20px 0; }
+                            .preview-content { line-height: 1.6; }
+                            .preview-tags { margin-top: 20px; }
+                            .tag { background: #e0e0e0; padding: 4px 8px; border-radius: 4px; margin-right: 8px; font-size: 0.9em; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="preview-header">
+                            <h1>${formData.title}</h1>
+                            <p><strong>Category:</strong> ${formData.category}</p>
+                            <p><strong>Status:</strong> ${formData.status}</p>
+                            <p><em>${formData.excerpt}</em></p>
+                        </div>
+                        ${formData.image ? `<img src="${formData.image}" class="preview-image" alt="Featured Image">` : ''}
+                        <div class="preview-content">
+                            ${formData.content.replace(/\n/g, '<br>')}
+                        </div>
+                        ${formData.tags.length ? `
+                            <div class="preview-tags">
+                                <strong>Tags:</strong> 
+                                ${formData.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                        ` : ''}
+                    </body>
+                    </html>
+                `);
+            }
+
+            generateSlug(title) {
+                return title.toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '-')
+                    .replace(/^-+|-+$/g, '');
+            }
+
+            showModal() {
+                document.getElementById('deleteModal').classList.add('active');
+            }
+
+            hideModal() {
+                document.getElementById('deleteModal').classList.remove('active');
+            }
+
+            showToast(message, type = 'info') {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.className = `toast toast-${type}`;
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // Database Status Monitor
+        class DatabaseMonitor {
+            constructor() {
+                this.statusElement = document.getElementById('dbStatus');
+                this.checkConnection();
+                setInterval(() => this.checkConnection(), 30000); // Check every 30 seconds
+            }
+
+            async checkConnection() {
+                try {
+                    await db.connect();
+                    this.updateStatus('connected', 'Database Connected');
+                } catch (error) {
+                    this.updateStatus('error', 'Database Error');
+                }
+            }
+
+            updateStatus(status, message) {
+                this.statusElement.className = `db-status ${status}`;
+                this.statusElement.querySelector('span').textContent = message;
+            }
+        }
+
+        // Initialize Application
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Initialize database first
+            await db.connect();
+            
+            // Then initialize the blog manager
+            window.blogManager = new BlogManager();
+            window.dbMonitor = new DatabaseMonitor();
+        });
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch (e.key) {
+                    case 'n':
+                        e.preventDefault();
+                        document.getElementById('addBlogBtn').click();
+                        break;
+                    case 's':
+                        e.preventDefault();
+                        if (document.getElementById('blogFormContainer').classList.contains('active')) {
+                            document.getElementById('blogForm').dispatchEvent(new Event('submit'));
+                        }
+                        break;
+                    case 'Escape':
+                        if (document.getElementById('blogFormContainer').classList.contains('active')) {
+                            blogManager.hideBlogForm();
+                        }
+                        if (document.getElementById('deleteModal').classList.contains('active')) {
+                            blogManager.hideModal();
+                        }
+                        break;
+                }
+            }
+        });
+
+        // Auto-save functionality
+        let autoSaveTimeout;
+        const formInputs = ['blogTitle', 'blogCategory', 'blogExcerpt', 'blogContent', 'blogTags', 'blogStatus'];
+
+        formInputs.forEach(inputId => {
+            const element = document.getElementById(inputId);
+            if (element) {
+                element.addEventListener('input', () => {
+                    clearTimeout(autoSaveTimeout);
+                    autoSaveTimeout = setTimeout(() => {
+                        // Auto-save to local storage would go here
+                        // But we can't use localStorage in this environment
+                        console.log('Auto-save triggered');
+                    }, 2000);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
