@@ -259,8 +259,8 @@
 
         .photo-wrapper {
             position: relative;
-            width: 400px;
-            height: 400px;
+            width: 380px;
+            height: 380px;
         }
 
         .photo-frame {
@@ -307,8 +307,12 @@
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%);
-            font-size: 8rem;
+            font-size: 6rem;
             color: var(--accent-blue);
+        }
+        
+        .photo-placeholder::before {
+            content: '👨‍💻';
         }
 
         .photo-inner img {
@@ -321,29 +325,32 @@
         .float-element {
             position: absolute;
             background: white;
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1.2rem;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(37, 99, 235, 0.15);
             font-weight: 600;
+            font-size: 0.9rem;
             color: var(--primary-blue);
             animation: float 3s infinite ease-in-out;
-        }
-
-        .float-element:nth-child(1) {
-            top: 10%;
-            right: -10%;
-            animation-delay: 0s;
+            white-space: nowrap;
+            z-index: 10;
         }
 
         .float-element:nth-child(2) {
-            bottom: 15%;
-            right: -15%;
-            animation-delay: 1s;
+            top: 5%;
+            right: -5%;
+            animation-delay: 0s;
         }
 
         .float-element:nth-child(3) {
-            top: 50%;
-            left: -15%;
+            bottom: 10%;
+            right: -8%;
+            animation-delay: 1s;
+        }
+
+        .float-element:nth-child(4) {
+            top: 45%;
+            left: -8%;
             animation-delay: 2s;
         }
 
@@ -877,14 +884,14 @@
                     <div class="photo-frame">
                         <div class="photo-inner">
                             <!-- Replace the placeholder with your photo -->
-                            <!-- <img src="anson.jpg" alt="Anson Saju"> -->
-                            <div class="photo-placeholder">👨‍💻</div>
+                            <img src="anson.jpg" alt="Anson Saju"> 
+                           
                         </div>
                     </div>
+                    <div class="float-element">💡 AI Powered</div>
+                    <div class="float-element">🚀 Innovative</div>
+                    <div class="float-element">⚡ Fast Learner</div>
                 </div>
-                <div class="float-element">💡 AI Powered</div>
-                <div class="float-element">🚀 Innovative</div>
-                <div class="float-element">⚡ Fast Learner</div>
             </div>
         </div>
     </section>
