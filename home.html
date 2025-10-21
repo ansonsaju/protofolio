@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anson Saju - Full Stack Developer & AI Enthusiast</title>
+    <title>Anson Saju - AI Product Engineer</title>
     <style>
         * {
             margin: 0;
@@ -20,6 +20,10 @@
             --light-gray: #f8fafc;
             --text-dark: #1e293b;
             --text-light: #64748b;
+            --success-green: #6c83c0;
+            --warning-yellow: #f59e0b;
+            --info-cyan: #06b6d4;
+            --enterprise-purple: #5c85f6;
         }
 
         body {
@@ -200,7 +204,44 @@
         .hero-subtitle {
             font-size: 1.3rem;
             color: var(--text-light);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .hero-description {
+            font-size: 1.05rem;
+            color: var(--text-light);
             margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        /* Hero Stats */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(37, 99, 235, 0.1);
+        }
+
+        .stat-item-hero {
+            text-align: center;
+        }
+
+        .stat-value-hero {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label-hero {
+            font-size: 0.9rem;
+            color: var(--text-light);
             font-weight: 500;
         }
 
@@ -246,6 +287,19 @@
             background: var(--primary-blue);
             color: white;
             transform: translateY(-3px);
+        }
+
+        /* CV Download Button - New Style */
+        .btn-cv {
+            background: linear-gradient(135deg, var(--success-green), #316fe9);
+            color: white;
+            box-shadow: 0 4px 20px rgba(16, 123, 185, 0.3);
+        }
+
+        .btn-cv:hover {
+            background: linear-gradient(135deg, #2c4ac3, var(--success-green));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(224, 230, 233, 0.4);
         }
 
         /* Photo Container */
@@ -525,6 +579,129 @@
             background: var(--light-gray);
         }
 
+        /* Featured Project Banner - NEW */
+        .featured-project {
+            background: linear-gradient(135deg, var(--enterprise-purple), var(--primary-blue));
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
+        }
+
+        .featured-project::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .featured-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .featured-project h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .featured-project p {
+            font-size: 1.15rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
+        .featured-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .featured-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .featured-tech-tag {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Status Badges - NEW */
+        .status-badge {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .badge-live {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-green);
+            border: 1px solid var(--success-green);
+        }
+
+        .badge-production {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-yellow);
+            border: 1px solid var(--warning-yellow);
+        }
+
+        .badge-iot {
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--info-cyan);
+            border: 1px solid var(--info-cyan);
+        }
+
+        .badge-enterprise {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--enterprise-purple);
+            border: 1px solid var(--enterprise-purple);
+        }
+
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -649,6 +826,16 @@
             margin: 0.5rem 0;
         }
 
+        .timeline-content ul {
+            margin-top: 0.5rem;
+            color: var(--text-light);
+            padding-left: 1.5rem;
+        }
+
+        .timeline-content ul li {
+            margin: 0.3rem 0;
+        }
+
         .timeline-dot {
             width: 24px;
             height: 24px;
@@ -755,6 +942,10 @@
                 justify-content: center;
             }
 
+            .hero-stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
             .float-element {
                 display: none;
             }
@@ -790,6 +981,15 @@
                 font-size: 1.1rem;
             }
 
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+
             .photo-wrapper {
                 width: 280px;
                 height: 280px;
@@ -797,6 +997,18 @@
 
             h2 {
                 font-size: 2rem;
+            }
+
+            .featured-project {
+                padding: 2rem;
+            }
+
+            .featured-project h3 {
+                font-size: 1.8rem;
+            }
+
+            .featured-metrics {
+                grid-template-columns: 1fr;
             }
 
             .timeline::before {
@@ -825,6 +1037,10 @@
         @media (max-width: 480px) {
             .hero h1 {
                 font-size: 2rem;
+            }
+
+            .stat-value-hero {
+                font-size: 1.5rem;
             }
 
             .btn {
@@ -866,15 +1082,36 @@
     <section id="home" class="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <div class="hero-label">👋 Welcome to my portfolio</div>
-                <h1>Hi, I'm <span>Anson Saju</span></h1>
-                <p class="hero-subtitle">Full Stack Developer | AI Enthusiast | IoT Expert</p>
+                <div class="hero-label">👨‍💻 AI Product Engineer</div>
+                <h1>Building <span>AI-Powered</span> Systems That Deliver Real Impact</h1>
+                <p class="hero-subtitle">Full-Stack AI Engineer | IoT Expert | Enterprise Solutions</p>
+                <p class="hero-description">Specializing in production-grade machine learning systems, IoT solutions, and enterprise software. Creating measurable business value across Education, Agriculture, Fashion Tech, and IoT domains.</p>
+                
+                <!-- Hero Stats -->
+                <div class="hero-stats">
+                    <div class="stat-item-hero">
+                        <div class="stat-value-hero">7+</div>
+                        <div class="stat-label-hero">Production Systems</div>
+                    </div>
+                    <div class="stat-item-hero">
+                        <div class="stat-value-hero">5+</div>
+                        <div class="stat-label-hero">Industries Covered</div>
+                    </div>
+                    <div class="stat-item-hero">
+                        <div class="stat-value-hero">85%+</div>
+                        <div class="stat-label-hero">AI Accuracy</div>
+                    </div>
+                </div>
+
                 <div class="hero-buttons">
                     <a href="#projects" class="btn btn-primary">
                         View My Work →
                     </a>
                     <a href="#contact" class="btn btn-secondary">
                         Get In Touch
+                    </a>
+                    <a href="ansoncv.pdf" download class="btn btn-cv">
+                        📄 Download CV
                     </a>
                 </div>
             </div>
@@ -884,13 +1121,13 @@
                     <div class="photo-frame">
                         <div class="photo-inner">
                             <!-- Replace the placeholder with your photo -->
-                            <img src="anson.jpg" alt="Anson Saju"> 
-                           
+                            <img src="anson.jpg" alt="Anson Saju" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="photo-placeholder" style="display:none;"></div>
                         </div>
                     </div>
                     <div class="float-element">💡 AI Powered</div>
-                    <div class="float-element">🚀 Innovative</div>
-                    <div class="float-element">⚡ Fast Learner</div>
+                    <div class="float-element">🚀 Enterprise-Grade</div>
+                    <div class="float-element">⚡ Production-Ready</div>
                 </div>
             </div>
         </div>
@@ -910,8 +1147,7 @@
                 <strong>full-stack development</strong>, <strong>artificial intelligence</strong>, and <strong>IoT systems</strong>.
             </p>
             <p>
-                My goal is to secure a position in a reputed software company where I can apply my technical expertise 
-                to create meaningful, innovative solutions while continuously learning and growing as a professional.
+                Currently working as a <strong>Full-Stack AI Developer at Planet Solutions</strong>, I've led the development of enterprise AI systems including the School Uniform AI Sizing System v3.0 with 85%+ accuracy. My goal is to secure a position in a reputed software company where I can apply my technical expertise to create meaningful, innovative solutions while continuously learning and growing as a professional.
             </p>
             <div class="about-stats">
                 <div class="stat-item">
@@ -942,48 +1178,115 @@
             <p class="section-description">Technologies and tools I work with</p>
         </div>
         <div class="skills-grid">
-            <div class="skill-card">
-                <div class="skill-icon">💻</div>
-                <h3>Programming</h3>
-                <ul>
-                    <li>C</li>
-                    <li>Python</li>
-                    <li>JavaScript</li>
-                    <li>HTML & CSS</li>
-                    <li>React & Node.js</li>
-                </ul>
-            </div>
+            <!-- AI & Machine Learning -->
             <div class="skill-card">
                 <div class="skill-icon">🤖</div>
-                <h3>AI & Frameworks</h3>
+                <h3>AI & Machine Learning</h3>
                 <ul>
-                    <li>TensorFlow.js</li>
-                    <li>Flask</li>
-                    <li>Teachable Machine</li>
-                    <li>ChatGPT & Claude AI</li>
-                    <li>Google Gemini</li>
+                    <li>Production ML deployment (v3.0 systems)</li>
+                    <li>Model training from scratch</li>
+                    <li>TensorFlow.js & Python ML</li>
+                    <li>85%+ prediction accuracy</li>
+                    <li>Google Teachable Machine</li>
+                    <li>Custom AI model development</li>
                 </ul>
             </div>
+
+            <!-- Full-Stack Development -->
             <div class="skill-card">
-                <div class="skill-icon">🛠️</div>
-                <h3>Tools & Platforms</h3>
+                <div class="skill-icon">💻</div>
+                <h3>Full-Stack Development</h3>
                 <ul>
-                    <li>GitHub</li>
-                    <li>VS Code</li>
-                    <li>AWS Services</li>
-                    <li>Google Colab</li>
-                    <li>Adobe Dreamweaver</li>
+                    <li>PHP & MySQL (Expert)</li>
+                    <li>React & JavaScript (ES6+)</li>
+                    <li>HTML5 & CSS3</li>
+                    <li>REST API Development</li>
+                    <li>Node.js</li>
+                    <li>Responsive Design</li>
                 </ul>
             </div>
+
+            <!-- IoT & Embedded Systems -->
             <div class="skill-card">
                 <div class="skill-icon">⚡</div>
-                <h3>Hardware & IoT</h3>
+                <h3>IoT & Embedded Systems</h3>
                 <ul>
-                    <li>Arduino</li>
-                    <li>ESP32</li>
-                    <li>Sensors</li>
+                    <li>ESP32 Advanced Programming</li>
+                    <li>Multi-sensor integration</li>
+                    <li>Web server on microcontrollers</li>
+                    <li>Real-time data monitoring</li>
+                    <li>Arduino & Circuit Design</li>
+                    <li>WiFi & Network protocols</li>
+                </ul>
+            </div>
+
+            <!-- Electronics & Hardware -->
+            <div class="skill-card">
+                <div class="skill-icon">🔧</div>
+                <h3>Electronics & Hardware</h3>
+                <ul>
+                    <li>Circuit design & implementation</li>
+                    <li>Sensor interfacing (DHT11, MQ135, PIR)</li>
+                    <li>Relay module control</li>
+                    <li>Soil moisture monitoring</li>
+                    <li>Hardware troubleshooting</li>
                     <li>Basic Electronics</li>
-                    <li>Circuit Design</li>
+                </ul>
+            </div>
+
+            <!-- Cybersecurity -->
+            <div class="skill-card">
+                <div class="skill-icon">🔒</div>
+                <h3>Cybersecurity</h3>
+                <ul>
+                    <li>Ethical Hacking</li>
+                    <li>Security Best Practices</li>
+                    <li>Penetration Testing</li>
+                    <li>Teaching Experience (Workshops)</li>
+                    <li>Vulnerability Assessment</li>
+                    <li>Network Security</li>
+                </ul>
+            </div>
+
+            <!-- Cloud & DevOps -->
+            <div class="skill-card">
+                <div class="skill-icon">☁️</div>
+                <h3>Cloud & DevOps</h3>
+                <ul>
+                    <li>AWS Cloud Services</li>
+                    <li>Server Management</li>
+                    <li>Hosting Automation</li>
+                    <li>Professional documentation</li>
+                    <li>Performance optimization (&lt;200ms)</li>
+                    <li>Git Version Control</li>
+                </ul>
+            </div>
+
+            <!-- Professional Skills -->
+            <div class="skill-card">
+                <div class="skill-icon">📚</div>
+                <h3>Professional Skills</h3>
+                <ul>
+                    <li>Technical documentation (21-page specs)</li>
+                    <li>Testing & QA (100% pass rates)</li>
+                    <li>Business value focus (ROI-driven)</li>
+                    <li>Team collaboration</li>
+                    <li>Client communication</li>
+                    <li>Project management</li>
+                </ul>
+            </div>
+
+            <!-- Product Development -->
+            <div class="skill-card">
+                <div class="skill-icon">🎯</div>
+                <h3>Product Development</h3>
+                <ul>
+                    <li>Full lifecycle ownership</li>
+                    <li>Iterative improvement (v3.0)</li>
+                    <li>User research & feedback</li>
+                    <li>Enterprise-grade systems</li>
+                    <li>Scalable architecture</li>
+                    <li>Performance metrics tracking</li>
                 </ul>
             </div>
         </div>
@@ -994,16 +1297,60 @@
         <div class="section-header">
             <div class="section-label">Portfolio</div>
             <h2>Featured Projects</h2>
-            <p class="section-description">Showcasing my best work and innovations</p>
+            <p class="section-description">Innovative solutions that combine AI, IoT, and full-stack development</p>
         </div>
+
+        <!-- Featured Project Banner -->
+        <div class="featured-project">
+            <span class="featured-badge">⭐ ENTERPRISE SYSTEM</span>
+            <h3>🎓 School Uniform AI Sizing System v3.0</h3>
+            <p>Production-grade AI system that revolutionizes school uniform ordering with 85% prediction accuracy and 80% time savings. Features comprehensive 21-page documentation and enterprise-level testing standards.</p>
+            
+            <div class="featured-metrics">
+                <div class="metric">
+                    <div class="metric-value">52+</div>
+                    <div class="metric-label">Items Supported</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">85%</div>
+                    <div class="metric-label">AI Accuracy</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">80%</div>
+                    <div class="metric-label">Time Savings</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">v3.0</div>
+                    <div class="metric-label">Version</div>
+                </div>
+            </div>
+
+            <div class="featured-tech">
+                <span class="featured-tech-tag">Python</span>
+                <span class="featured-tech-tag">Machine Learning</span>
+                <span class="featured-tech-tag">Custom AI Model</span>
+                <span class="featured-tech-tag">PHP</span>
+                <span class="featured-tech-tag">MySQL</span>
+                <span class="featured-tech-tag">React</span>
+                <span class="featured-tech-tag">Enterprise Testing</span>
+            </div>
+
+            <p style="margin-top: 1.5rem; font-size: 0.95rem; opacity: 0.9;">
+                <strong>Impact:</strong> Transformed manual 30-minute measurement process into instant AI predictions. Deployed at Planet Solutions with full lifecycle ownership from v1.0 to v3.0.
+            </p>
+        </div>
+
+        <!-- All Projects Grid -->
         <div class="projects-grid">
+            <!-- FarmLink -->
             <div class="project-card">
                 <div class="project-header">
                     <div class="project-icon">🌾</div>
                 </div>
                 <div class="project-body">
+                    <span class="status-badge badge-live">🟢 LIVE</span>
                     <h3>FarmLink – AI Crop Disease Detection</h3>
-                    <p>AI-powered tool using Google Teachable Machine to detect crop diseases through image analysis and provide remedy suggestions.</p>
+                    <p><strong>Production AI system</strong> using Google Teachable Machine to detect crop diseases through image analysis and provide remedy suggestions.</p>
                     <div class="tech-stack">
                         <span class="tech-tag">HTML</span>
                         <span class="tech-tag">CSS</span>
@@ -1011,52 +1358,96 @@
                         <span class="tech-tag">TensorFlow.js</span>
                         <span class="tech-tag">Flask</span>
                     </div>
-                    <a href="https://ansonsaju.github.io/Farmlink/" target="_blank" class="btn btn-primary" style="font-size: 0.9rem;">View Project →</a>
+                    <a href="https://ansonsaju.github.io/Farmlink/" target="_blank" class="btn btn-primary" style="font-size: 0.9rem;">View Live Project →</a>
                 </div>
             </div>
 
+            <!-- Canteen -->
             <div class="project-card">
                 <div class="project-header">
                     <div class="project-icon">🍴</div>
                 </div>
                 <div class="project-body">
+                    <span class="status-badge badge-live">🟢 LIVE</span>
                     <h3>Canteen Management Website</h3>
-                    <p>Responsive website for online canteen order management with intuitive interface and real-time updates.</p>
+                    <p>Responsive website for online canteen order management with intuitive interface and real-time updates. Streamlined ordering process for campus operations.</p>
                     <div class="tech-stack">
                         <span class="tech-tag">HTML</span>
                         <span class="tech-tag">CSS</span>
                         <span class="tech-tag">JavaScript</span>
                     </div>
-                    <a href="https://ansonsaju.github.io/canteen/index.html" target="_blank" class="btn btn-primary" style="font-size: 0.9rem;">View Project →</a>
+                    <a href="https://ansonsaju.github.io/canteen/index.html" target="_blank" class="btn btn-primary" style="font-size: 0.9rem;">View Live Project →</a>
                 </div>
             </div>
 
+            <!-- Planet Solutions -->
             <div class="project-card">
                 <div class="project-header">
                     <div class="project-icon">💼</div>
                 </div>
                 <div class="project-body">
-                    <h3>Planet Solutions</h3>
-                    <p>Collaborative management software for company operations (Currently in Development).</p>
+                    <span class="status-badge badge-production">🟡 IN PRODUCTION</span>
+                    <h3>Planet Solutions – Tailor Dashboard</h3>
+                    <p>Enterprise collaborative management software with <strong>AI integration</strong> for measurement predictions. Features comprehensive business analytics and workflow automation.</p>
                     <div class="tech-stack">
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">PHP</span>
                         <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Python ML</span>
                     </div>
                 </div>
             </div>
 
+            <!-- ESPERA -->
             <div class="project-card">
                 <div class="project-header">
                     <div class="project-icon">⚡</div>
                 </div>
                 <div class="project-body">
+                    <span class="status-badge badge-live">🟢 LIVE</span>
                     <h3>ESPERA Power Solutions</h3>
-                    <p>Business website for an electrical company showcasing services and contact information.</p>
+                    <p>Professional business website for an electrical company showcasing services, portfolio, and contact information with modern responsive design.</p>
                     <div class="tech-stack">
                         <span class="tech-tag">HTML</span>
                         <span class="tech-tag">CSS</span>
                         <span class="tech-tag">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Smart Environmental Monitoring -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">🌍</div>
+                </div>
+                <div class="project-body">
+                    <span class="status-badge badge-iot">🔵 IoT SYSTEM</span>
+                    <h3>Smart Environmental Monitoring</h3>
+                    <p>ESP32-based IoT system with multi-sensor integration (DHT11, MQ135, Soil Moisture). Features real-time web dashboard and intelligent alerts.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">ESP32</span>
+                        <span class="tech-tag">Arduino C++</span>
+                        <span class="tech-tag">DHT11</span>
+                        <span class="tech-tag">MQ135</span>
+                        <span class="tech-tag">Web Server</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Smart Home Automation -->
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">🏠</div>
+                </div>
+                <div class="project-body">
+                    <span class="status-badge badge-iot">🔵 IoT SYSTEM</span>
+                    <h3>Smart Home Automation System</h3>
+                    <p>ESP32-powered home automation with relay control, motion detection (PIR), and temperature monitoring. Mobile-responsive web interface.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">ESP32</span>
+                        <span class="tech-tag">Arduino C++</span>
+                        <span class="tech-tag">Relay Module</span>
+                        <span class="tech-tag">PIR Sensor</span>
                     </div>
                 </div>
             </div>
@@ -1071,6 +1462,24 @@
             <p class="section-description">My professional journey and milestones</p>
         </div>
         <div class="timeline">
+            <!-- Planet Solutions -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Full-Stack AI Developer</h3>
+                    <p><strong>Planet Solutions</strong> | Present</p>
+                    <p>Leading development of enterprise AI systems:</p>
+                    <ul>
+                        <li>Built School Uniform AI Sizing System v3.0 from scratch</li>
+                        <li>Tailor Company Dashboard with ML predictions</li>
+                        <li>Production ML models with 85%+ accuracy</li>
+                        <li>Comprehensive 21-page documentation</li>
+                        <li>100% test pass rates</li>
+                    </ul>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <!-- AWS Internship -->
             <div class="timeline-item">
                 <div class="timeline-content">
                     <h3>AWS Cloud Computing Intern</h3>
@@ -1080,6 +1489,7 @@
                 <div class="timeline-dot"></div>
             </div>
 
+            <!-- NASA Space Apps -->
             <div class="timeline-item">
                 <div class="timeline-content">
                     <h3>NASA Space Apps Challenge 2024</h3>
@@ -1088,6 +1498,7 @@
                 <div class="timeline-dot"></div>
             </div>
 
+            <!-- C Programming Certification -->
             <div class="timeline-item">
                 <div class="timeline-content">
                     <h3>C Programming Certification</h3>
@@ -1097,9 +1508,10 @@
                 <div class="timeline-dot"></div>
             </div>
 
+            <!-- Cyber Security Workshop -->
             <div class="timeline-item">
                 <div class="timeline-content">
-                    <h3>Cyber Security Workshop</h3>
+                    <h3>Cyber Security Workshop Instructor</h3>
                     <p>Conducted classes on Cyber Security & Ethical Hacking for students.</p>
                 </div>
                 <div class="timeline-dot"></div>
@@ -1112,7 +1524,7 @@
         <div class="section-header">
             <div class="section-label">Let's Connect</div>
             <h2>Get In Touch</h2>
-            <p class="section-description">Feel free to reach out for collaborations or opportunities</p>
+            <p class="section-description">Open for collaborations, opportunities, and innovative projects</p>
         </div>
         <div class="contact-grid">
             <div class="contact-card">
