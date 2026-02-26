@@ -5,6 +5,807 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anson Saju - AI Product Engineer</title>
     <style>
+/* --- INJECTED PREMIUM LIGHT MODE AESTHETIC --- */
+:root {
+    /* Premium Light Mode Palette */
+    --bg-color: #FAFAFC;
+    /* Extremely soft, cool off-white */
+    --text-primary: #0F172A;
+    /* Slate 900 */
+    --text-secondary: #64748B;
+    /* Slate 500 */
+
+    /* Acrylic/Glassmorphism Light Settings */
+    --glass-bg: rgba(255, 255, 255, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.8);
+    --glass-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+
+    /* Elegant Gradients */
+    --accent-1: #4F46E5;
+    /* Indigo */
+    --accent-2: #EC4899;
+    /* Pink */
+    --accent-3: #14B8A6;
+    /* Teal */
+
+    --font-main: 'Outfit', sans-serif;
+    --font-heading: 'Space Grotesk', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    line-height: 1.5;
+}
+
+/* Stunning Mesh Gradient & Blobs */
+.mesh-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 0) 0, transparent 50%),
+        radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 0) 0, transparent 50%),
+        radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 0) 0, transparent 50%);
+    background-color: #f8fafc;
+    z-index: -2;
+}
+
+.blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: -1;
+    opacity: 0.5;
+    animation: drift 25s infinite alternate ease-in-out;
+}
+
+.blob-1 {
+    top: -10%;
+    left: -10%;
+    width: 40vw;
+    height: 40vw;
+    background: #E0E7FF;
+}
+
+/* Pale Indigo */
+.blob-2 {
+    bottom: -10%;
+    right: -5%;
+    width: 50vw;
+    height: 50vw;
+    background: #FCE7F3;
+    animation-delay: -5s;
+}
+
+/* Pale Pink */
+.blob-3 {
+    top: 30%;
+    left: 30%;
+    width: 35vw;
+    height: 35vw;
+    background: #CCFBF1;
+    animation-delay: -10s;
+}
+
+/* Pale Teal */
+
+@keyframes drift {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(3%, 5%) scale(1.05);
+    }
+
+    100% {
+        transform: translate(-2%, 8%) scale(1);
+    }
+}
+
+.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+/* Header Styles */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 5rem;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 1.2rem;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-3);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.pulse {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-3);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(20, 184, 166, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(20, 184, 166, 0);
+    }
+}
+
+/* Shimmering Text Effect for Light Mode */
+.shiny-text {
+    font-family: var(--font-heading);
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+
+    background: linear-gradient(110deg,
+            #0F172A 0%,
+            #334155 40%,
+            #94A3B8 50%,
+            #334155 60%,
+            #0F172A 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+
+.subtitle {
+    font-size: 1.35rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.header-stats {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.stat-box {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 1.75rem;
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: var(--glass-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 160px;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+    opacity: 0.8;
+}
+
+.stat-value {
+    font-size: 2.75rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.text-gradient-1 {
+    background: linear-gradient(135deg, #4F46E5, #8B5CF6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-2 {
+    background: linear-gradient(135deg, #EC4899, #F43F5E);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+/* Grid Layout */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 2.5rem;
+}
+
+/* Premium Light Project Card */
+.project-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    box-shadow: var(--glass-shadow);
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    cursor: pointer;
+    transform-style: preserve-3d;
+}
+
+/* Soft inner glow */
+.project-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Dynamic drop shadow on hover */
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1), 0 0 20px rgba(79, 70, 229, 0.1);
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.card-visual {
+    height: 240px;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.visual-content {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.project-card:hover .visual-content {
+    transform: scale(1.08);
+    /* Sophisticated slow zoom */
+}
+
+/* Sophisticated Light Gradients for Visuals */
+.visual-espera {
+    background: linear-gradient(135deg, #E0E7FF, #C7D2FE);
+    border: 1px solid #e2e8f0;
+}
+
+/* Subtle Blue */
+.visual-aspire {
+    background: linear-gradient(135deg, #FCE7F3, #FBCFE8);
+    border: 1px solid #fce7f3;
+}
+
+/* Subtle Pink */
+.visual-planet {
+    background: linear-gradient(135deg, #DCFCE7, #BBF7D0);
+    border: 1px solid #dcfce7;
+}
+
+/* Subtle Green */
+.visual-farmlink {
+    background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+    border: 1px solid #fef3c7;
+}
+
+/* Subtle Yellow */
+.visual-portfolio {
+    background: linear-gradient(135deg, #F3F4F6, #E5E7EB);
+    border: 1px solid #f3f4f6;
+}
+
+/* Subtle Grey */
+
+/* Visual overlay gradient for depth */
+.card-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.05) 100%);
+    mix-blend-mode: multiply;
+}
+
+.card-data {
+    padding: 0 0.5rem 0.5rem 0.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.project-category {
+    font-size: 0.75rem;
+    color: var(--accent-1);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    background: #EEF2FF;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.project-title {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    background: #FFFFFF;
+    padding: 0.6rem 1.2rem;
+    border-radius: 100px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.project-card:hover .project-link {
+    background: var(--text-primary);
+    color: #FFFFFF;
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.15);
+    transform: translateY(-2px);
+}
+
+.project-link svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-link svg {
+    transform: translateX(3px) translateY(-3px);
+}
+
+/* Elite Animations */
+.animate-slide-up {
+    opacity: 0;
+    animation: slideUpFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.slide-in-right {
+    opacity: 0;
+    transform: translateX(30px);
+    animation: slideRightFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--delay);
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideRightFade {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+    }
+
+    .header-stats {
+        width: 100%;
+    }
+
+    .stat-box {
+        flex: 1;
+    }
+
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+
+    .shiny-text {
+        font-size: 3rem;
+    }
+}
+
+/* ------------------------------------- */
+/* --- 3D CSS SHAPES & ANIMATIONS --- */
+/* ------------------------------------- */
+
+.shape-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    perspective: 800px;
+    z-index: 2;
+    width: 100px;
+    height: 100px;
+}
+
+/* 1. The Cube (ESPERA) */
+.cube {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: spinCube 12s infinite linear;
+}
+
+.cube .face {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: rgba(79, 70, 229, 0.15);
+    border: 1px solid rgba(79, 70, 229, 0.5);
+    backdrop-filter: blur(8px);
+    box-shadow: inset 0 0 20px rgba(79, 70, 229, 0.2);
+}
+
+.cube .front {
+    transform: rotateY(0deg) translateZ(50px);
+}
+
+.cube .back {
+    transform: rotateY(180deg) translateZ(50px);
+}
+
+.cube .right {
+    transform: rotateY(90deg) translateZ(50px);
+}
+
+.cube .left {
+    transform: rotateY(-90deg) translateZ(50px);
+}
+
+.cube .top {
+    transform: rotateX(90deg) translateZ(50px);
+}
+
+.cube .bottom {
+    transform: rotateX(-90deg) translateZ(50px);
+}
+
+@keyframes spinCube {
+    from {
+        transform: rotateX(0deg) rotateY(0deg);
+    }
+
+    to {
+        transform: rotateX(360deg) rotateY(360deg);
+    }
+}
+
+/* 2. Orbits (Aspire) */
+.orbits {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.ring {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid rgba(236, 72, 153, 0.5);
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.2), inset 0 0 15px rgba(236, 72, 153, 0.2);
+    transform-style: preserve-3d;
+}
+
+.ring1 {
+    animation: spinRing1 5s linear infinite;
+}
+
+.ring2 {
+    animation: spinRing2 7s linear infinite;
+}
+
+.ring3 {
+    animation: spinRing3 9s linear infinite;
+}
+
+.core {
+    position: absolute;
+    top: 35px;
+    left: 35px;
+    width: 30px;
+    height: 30px;
+    background: #EC4899;
+    border-radius: 50%;
+    box-shadow: 0 0 30px #EC4899;
+    animation: pulseCore 2s ease-in-out infinite alternate;
+}
+
+@keyframes spinRing1 {
+    0% {
+        transform: rotateX(60deg) rotateY(0deg);
+    }
+
+    100% {
+        transform: rotateX(60deg) rotateY(360deg);
+    }
+}
+
+@keyframes spinRing2 {
+    0% {
+        transform: rotateX(120deg) rotateY(0deg);
+    }
+
+    100% {
+        transform: rotateX(120deg) rotateY(360deg);
+    }
+}
+
+@keyframes spinRing3 {
+    0% {
+        transform: rotateX(0deg) rotateY(0deg);
+    }
+
+    100% {
+        transform: rotateX(0deg) rotateY(360deg);
+    }
+}
+
+@keyframes pulseCore {
+    0% {
+        transform: scale(0.8);
+    }
+
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+/* 3. Sphere Wireframe (Planet) */
+.sphere {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: spinSphere 10s infinite linear;
+}
+
+.circle {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(16, 185, 129, 0.8);
+}
+
+.c1 {
+    transform: rotateY(0deg);
+}
+
+.c2 {
+    transform: rotateY(45deg);
+}
+
+.c3 {
+    transform: rotateY(90deg);
+}
+
+.c4 {
+    transform: rotateY(135deg);
+}
+
+@keyframes spinSphere {
+    from {
+        transform: rotateX(20deg) rotateY(0deg);
+    }
+
+    to {
+        transform: rotateX(20deg) rotateY(360deg);
+    }
+}
+
+/* 4. Pyramid (FarmLink) */
+.pyramid {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: spinPyramid 8s infinite linear;
+    top: 20px;
+}
+
+.face-p {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 80px solid rgba(234, 179, 8, 0.2);
+    filter: drop-shadow(0 0 5px rgba(234, 179, 8, 0.3));
+    backdrop-filter: blur(4px);
+}
+
+.front-p {
+    transform: translateZ(25px) rotateX(30deg);
+    transform-origin: bottom;
+    border-bottom-color: rgba(234, 179, 8, 0.4);
+}
+
+.back-p {
+    transform: translateZ(-25px) rotateX(-30deg);
+    transform-origin: bottom;
+    border-bottom-color: rgba(234, 179, 8, 0.3);
+}
+
+.left-p {
+    transform: translateX(-25px) rotateY(-90deg) rotateX(30deg);
+    transform-origin: bottom;
+    border-bottom-color: rgba(234, 179, 8, 0.2);
+}
+
+.right-p {
+    transform: translateX(25px) rotateY(90deg) rotateX(30deg);
+    transform-origin: bottom;
+    border-bottom-color: rgba(234, 179, 8, 0.1);
+}
+
+.base-p {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    background: rgba(234, 179, 8, 0.5);
+    transform: rotateX(90deg) translateZ(-40px);
+    box-shadow: 0 0 20px rgba(234, 179, 8, 0.4);
+}
+
+@keyframes spinPyramid {
+    from {
+        transform: rotateX(-15deg) rotateY(0deg);
+    }
+
+    to {
+        transform: rotateX(-15deg) rotateY(360deg);
+    }
+}
+
+/* 5. Glass Stack (Portfolio) */
+.glass-stack {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: floatStack 4s ease-in-out infinite alternate;
+}
+
+.layer {
+    position: absolute;
+    width: 80px;
+    height: 100px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(100, 116, 139, 0.4);
+    border-radius: 8px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.layer1 {
+    transform: rotateX(60deg) rotateZ(45deg) translateZ(20px);
+}
+
+.layer2 {
+    transform: rotateX(60deg) rotateZ(45deg) translateZ(0px);
+    opacity: 0.8;
+}
+
+.layer3 {
+    transform: rotateX(60deg) rotateZ(45deg) translateZ(-20px);
+    opacity: 0.5;
+}
+
+@keyframes floatStack {
+    from {
+        transform: translateY(-10px) rotateY(0deg);
+    }
+
+    to {
+        transform: translateY(10px) rotateY(15deg);
+    }
+}
+/* --- ORIGINAL PORTFOLIO STYLES (FALLBACK/LAYOUT) --- */
+
         * {
             margin: 0;
             padding: 0;
@@ -1057,6 +1858,12 @@
     </style>
 </head>
 <body>
+    <!-- Ambient Light Background Elements -->
+    <div class="mesh-bg"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
     <div class="progress-bar" id="progressBar"></div>
 
     <nav id="navbar">
@@ -1083,7 +1890,7 @@
         <div class="hero-container">
             <div class="hero-content">
                 <div class="hero-label">👨‍💻 AI Product Engineer</div>
-                <h1>Building <span>AI-Powered</span> Systems That Deliver Real Impact</h1>
+                <h1 class="shiny-text">Building <span>AI-Powered</span> Systems That Deliver Real Impact</h1>
                 <p class="hero-subtitle">Full-Stack AI Engineer | IoT Expert | Enterprise Solutions</p>
                 <p class="hero-description">Specializing in production-grade machine learning systems, IoT solutions, and enterprise software. Creating measurable business value across Education, Agriculture, Fashion Tech, and IoT domains.</p>
                 
@@ -1344,9 +2151,21 @@
         <div class="projects-grid">
             <!-- FarmLink -->
             <div class="project-card">
-                <div class="project-header">
-                    <div class="project-icon">🌾</div>
+                <div class="project-header" style="background: transparent; padding: 0; min-height: 200px;">
+        <div class="card-visual" style="margin:0; height: 100%; border-radius: 24px 24px 0 0;">
+            <div class="visual-content visual-farmlink" style="display:flex; justify-content:center; align-items:center;">
+                <div class="shape-container">
+                    <div class="pyramid">
+                        <div class="face-p front-p"></div>
+                        <div class="face-p back-p"></div>
+                        <div class="face-p left-p"></div>
+                        <div class="face-p right-p"></div>
+                        <div class="base-p"></div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
                 <div class="project-body">
                     <span class="status-badge badge-live">🟢 LIVE</span>
                     <h3>FarmLink – AI Crop Disease Detection</h3>
@@ -1364,9 +2183,20 @@
 
             <!-- Canteen -->
             <div class="project-card">
-                <div class="project-header">
-                    <div class="project-icon">🍴</div>
+                <div class="project-header" style="background: transparent; padding: 0; min-height: 200px;">
+        <div class="card-visual" style="margin:0; height: 100%; border-radius: 24px 24px 0 0;">
+            <div class="visual-content visual-planet" style="display:flex; justify-content:center; align-items:center;">
+                <div class="shape-container">
+                    <div class="sphere">
+                        <div class="circle c1"></div>
+                        <div class="circle c2"></div>
+                        <div class="circle c3"></div>
+                        <div class="circle c4"></div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
                 <div class="project-body">
                     <span class="status-badge badge-live">🟢 LIVE</span>
                     <h3>Canteen Management Website</h3>
@@ -1382,9 +2212,19 @@
 
             <!-- Planet Solutions -->
             <div class="project-card">
-                <div class="project-header">
-                    <div class="project-icon">💼</div>
+                <div class="project-header" style="background: transparent; padding: 0; min-height: 200px;">
+        <div class="card-visual" style="margin:0; height: 100%; border-radius: 24px 24px 0 0;">
+            <div class="visual-content visual-portfolio" style="display:flex; justify-content:center; align-items:center;">
+                <div class="shape-container">
+                    <div class="glass-stack">
+                        <div class="layer layer1"></div>
+                        <div class="layer layer2"></div>
+                        <div class="layer layer3"></div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
                 <div class="project-body">
                     <span class="status-badge badge-production">🟡 IN PRODUCTION</span>
                     <h3>Planet Solutions – Tailor Dashboard</h3>
@@ -1400,9 +2240,19 @@
 
             <!-- ESPERA -->
             <div class="project-card">
-                <div class="project-header">
-                    <div class="project-icon">⚡</div>
+                <div class="project-header" style="background: transparent; padding: 0; min-height: 200px;">
+        <div class="card-visual" style="margin:0; height: 100%; border-radius: 24px 24px 0 0;">
+            <div class="visual-content visual-espera" style="display:flex; justify-content:center; align-items:center;">
+                <div class="shape-container">
+                    <div class="cube">
+                        <div class="face front"></div><div class="face back"></div>
+                        <div class="face top"></div><div class="face bottom"></div>
+                        <div class="face left"></div><div class="face right"></div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
                 <div class="project-body">
                     <span class="status-badge badge-live">🟢 LIVE</span>
                     <h3>ESPERA Power Solutions</h3>
@@ -1417,9 +2267,20 @@
 
             <!-- Smart Environmental Monitoring -->
             <div class="project-card">
-                <div class="project-header">
-                    <div class="project-icon">🌍</div>
+                <div class="project-header" style="background: transparent; padding: 0; min-height: 200px;">
+        <div class="card-visual" style="margin:0; height: 100%; border-radius: 24px 24px 0 0;">
+            <div class="visual-content visual-aspire" style="display:flex; justify-content:center; align-items:center;">
+                <div class="shape-container">
+                    <div class="orbits">
+                        <div class="ring ring1"></div>
+                        <div class="ring ring2"></div>
+                        <div class="ring ring3"></div>
+                        <div class="core"></div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
                 <div class="project-body">
                     <span class="status-badge badge-iot">🔵 IoT SYSTEM</span>
                     <h3>Smart Environmental Monitoring</h3>
@@ -1436,9 +2297,20 @@
 
             <!-- Smart Home Automation -->
             <div class="project-card">
-                <div class="project-header">
-                    <div class="project-icon">🏠</div>
+                <div class="project-header" style="background: transparent; padding: 0; min-height: 200px;">
+        <div class="card-visual" style="margin:0; height: 100%; border-radius: 24px 24px 0 0;">
+            <div class="visual-content visual-espera" style="display:flex; justify-content:center; align-items:center;">
+                <div class="shape-container">
+                    <div class="orbits" style="filter: hue-rotate(180deg);">
+                        <div class="ring ring1"></div>
+                        <div class="ring ring2"></div>
+                        <div class="ring ring3"></div>
+                        <div class="core"></div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
                 <div class="project-body">
                     <span class="status-badge badge-iot">🔵 IoT SYSTEM</span>
                     <h3>Smart Home Automation System</h3>
